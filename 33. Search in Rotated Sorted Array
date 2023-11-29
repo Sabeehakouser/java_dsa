@@ -1,0 +1,29 @@
+class Solution {
+    public int indexSearch(int[] nums, int n,int l,int h,int target){
+        int mid=-1;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            //base condition
+            if(nums[mid]==target) return mid;
+            //check for sorted part
+            // left sorted
+            if(nums[l]<=nums[mid]){
+                // check if target is present in this range
+                if(nums[l]<=target && target<=nums[mid]) h=mid-1;
+                else l=mid+1;
+            }
+            //right sorted
+            if(nums[h]>=nums[mid]){
+                // check if target is present in this range
+                if(nums[mid]<=target && target<=nums[h]) l=mid+1;
+                else h=mid-1;
+            }            
+        }
+        return -1;
+    }
+    public int search(int[] nums, int target) {
+        int n=nums.length;
+        int position = indexSearch(nums,n,0,n-1,target);
+        return position;
+    }
+}
