@@ -1,0 +1,34 @@
+class Solution {
+    private boolean isFound(int []nums,int n, int l,int h,int target){
+        int mid=0;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            if(nums[mid]==target) return true;
+            // check if element at l == mid == h and decrease the search space
+            if(nums[l]==nums[mid] && nums[mid]==nums[h]){
+                l++;
+                h--;
+                continue;
+            }
+            // check the sorted part
+            // left sorted part
+            if(nums[l]<=nums[mid]){
+                // check if target is present in the range
+                if(nums[l]<=target && target<=nums[mid]) h=mid-1;
+                else l=mid+1;
+            }
+            // right sorted part
+            if( nums[mid]<=nums[h]){
+                if(nums[mid]<=target && target<=nums[h]) l=mid+1;
+                else h=mid-1;
+            }
+
+        }
+        return false;
+    }
+    public boolean search(int[] nums, int target) {
+        int n=nums.length;
+        boolean pos=isFound(nums,n,0,n-1,target);
+        return pos;
+    }
+}
