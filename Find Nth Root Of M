@@ -1,0 +1,24 @@
+public class Solution {
+    private static long searchNthRoot(long n,long l,long h,int m){
+        long mid=0;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            int res=(int)Math.pow(mid,n);
+            if(res==m) return mid;
+            else if(res<m){
+                l=mid+1;
+            }
+            else{
+                h=mid-1;
+            }
+        }
+        return -1;
+    }
+    public static int NthRoot(int n, int m) {
+        // Write your code here.
+        long ans=-1;
+        if(n==1) return m;
+        ans=searchNthRoot(n,1,m,m);
+        return (int)ans;
+    }
+}
