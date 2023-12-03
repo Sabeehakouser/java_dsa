@@ -1,0 +1,41 @@
+class Solution {
+    private int maxNumBananas(int[] piles){
+        int max=-1;
+        for(int ele:piles){
+            if(ele>max) max=ele;
+        }
+        return max;
+    }
+    private int findTotalHours(int[] piles,int k){
+        long tot=0;
+        for(int ele:piles){
+            tot+=(int)Math.ceil((double)ele/(double)k);
+        }
+        // System.out.println(tot);
+        if(tot>Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        return (int)tot;
+    }
+    private int searchK(int[] piles,int l,int h,int hours){
+        int mid=-1;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            int totHours=findTotalHours(piles,mid);
+            // commented code is wrong as we are stopping as soon as we get a result. We have to get minimum value of it.
+            // if(totHours==hours) return mid;
+            // else if(totHours<hours) l=mid+1;
+
+            // if tothours we got is less then we keep the value and search for even lower values on the left
+            if(totHours<=hours){
+                h=mid-1;
+            }
+            // else we search on the right
+            else l=mid+1;
+        }
+        return l;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        int maxPiles= maxNumBananas(piles);
+        int k = searchK(piles,1,maxPiles,h);
+        return k;
+    }
+}
