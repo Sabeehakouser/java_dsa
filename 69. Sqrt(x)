@@ -1,0 +1,29 @@
+class Solution {
+    private long searchSqrt(long l,long h,long x){
+        long mid=0,ans=-1;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            // 1 2 3 4 
+            // mid-> 2
+            // if mid*mid is less than or eq x we assign mid to ans
+            // ans we eliminate the left part
+            if(mid*mid<=x){
+                ans=mid;
+                l=mid+1;
+            }
+            // if its greater then we eliminate the right part
+            else h=mid-1;
+        }
+        return ans;
+    }
+    public int mySqrt(int x) {
+        long ans=0,i=1;
+        if(x==0) return 0;
+        ans=searchSqrt(1,x,x);
+        // while(i*i<=x){
+        //     ans=i;
+        //     i++;
+        // }
+        return (int)ans;
+    }
+}
