@@ -1,0 +1,28 @@
+class Solution {
+    private int searchSingleND(int[] nums,int l,int h){
+        int mid=-1;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            //base case
+            if(nums[mid-1]!=nums[mid] && nums[mid]!=nums[mid+1]) return nums[mid];
+            //if the single element is on right side. curr index is even and next is odd.
+            //if even index then next element should be same
+            if((mid%2==0 && nums[mid]==nums[mid+1]) || (mid%2==1 && nums[mid]==nums[mid-1])) l=mid+1;
+            //if odd index then element prev indx equal to present index element
+
+            // if single element on left side
+            else h=mid-1;
+        }
+        return -1;
+    }
+    public int singleNonDuplicate(int[] nums) {
+      int n=nums.length;
+      if(n==1) return nums[0];
+      if(nums[0]!=nums[1]) return nums[0];
+      if(nums[n-2]!=nums[n-1]) return nums[n-1];
+      // sequence is even-odd as it starts from 0,
+      // once there is a different element it changes to odd-even
+      int singleND=searchSingleND(nums,1,n-2);
+      return singleND;
+    }
+}
