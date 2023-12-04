@@ -1,0 +1,51 @@
+class Solution {
+    private int findMin(int[] bloomDay){
+        int min=Integer.MAX_VALUE;
+        for(int ele:bloomDay){
+            if(ele<min) min=ele;
+        }
+        return min;
+    }
+    private int findMax(int[] bloomDay){
+        int max=Integer.MIN_VALUE;
+        for(int ele : bloomDay){
+            if(ele>max) max=ele;
+        }
+        return max;
+    }
+    private int numDays(int[] bloomDay,int day,int k){
+        int count=0,totBoqs=0;
+        for(int ele : bloomDay){
+            if(ele<=day) count++;
+            else{
+                totBoqs+=count/k;
+                count=0;
+            }
+        }
+        totBoqs+=count/k;
+        return totBoqs;
+    }
+    private int findNumDays(int[] bloomDay,int l,int h,int m,int k){
+        int mid=0;
+        while(l<=h){
+            mid=(h-l)/2+l;
+            int boqs=numDays(bloomDay,mid,k);
+            // if noqs are formed - either equal or more than required number
+            // then search in left of array
+            if(boqs>=m){
+                h=mid-1;
+            }
+            else l=mid+1;
+        }
+        return l;
+    }
+    public int minDays(int[] bloomDay, int m, int k) {
+        int minDay=findMin(bloomDay);
+        int maxDay=findMax(bloomDay);
+        int n=bloomDay.length;
+        long limit=(long)m*k;
+        if(limit>n) return -1;
+        int numDays= findNumDays(bloomDay,minDay,maxDay,m,k);
+        return numDays;
+    }
+}
